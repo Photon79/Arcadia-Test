@@ -27,22 +27,13 @@ export class ListDetailsComponent implements OnInit {
   public list$ = new Subject<IList>();
 
   filter: string;
-  @ObservableProperty('filter')
-  public filter$ = new Subject<string>();
-
   status: string;
-  @ObservableProperty('status')
-  public status$ = new Subject<string>();
-
   newTitle: string;
   todoItemsCollection: AngularFirestoreCollection<ITodoItem>;
   todoItems: Array<ITodoItem> = [];
   haveTodos = true;
 
-  constructor(private db: AngularFirestore) {
-    this.filter = '';
-    this.status = '';
-  }
+  constructor(private db: AngularFirestore) { }
 
   ngOnInit() {
     this.list$
