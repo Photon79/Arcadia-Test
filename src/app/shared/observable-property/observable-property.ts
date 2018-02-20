@@ -1,5 +1,5 @@
 export function ObservableProperty(propertyName: string = null) {
-  return function ObservableProperty(
+  return function (
     target: any,
     subjectName: string,
   ) {

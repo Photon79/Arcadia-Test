@@ -19,7 +19,7 @@ import { ObservableProperty } from '../shared/observable-property/observable-pro
 @Component({
   selector: 'app-list-details',
   templateUrl: './list-details.component.html',
-  styleUrls: ['./list-details.component.sass']
+  styleUrls: ['./list-details.component.sass'],
 })
 export class ListDetailsComponent implements OnInit {
   @Input() list: IList;
@@ -45,41 +45,19 @@ export class ListDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    const combined = Observable
-      .combineLatest(
-        [
-          this.list$.startWith(null),
-          this.filter$.startWith(''),
-          this.status$.startWith('')
-        ],
-        (list, filter, status) => ({ list, filter, status }),
-      );
-
-    combined
+    this.list$
       .debounceTime(300)
-      .subscribe(({ list, filter, status }) => {
+      .subscribe(list => {
         if (list) {
-          this.todoItemsCollection = this.db.collection<ITodoItem>('todos', ref => {
-            let query = ref.where('listId', '==', list.id);
-
-            if (filter) {
-              query = query.where('title', '==', filter);
-            }
-
-            if (status) {
-              query = query.where('completed', '==', status === 'completed' ? true : false);
-            }
-
-            return query;
-          });
-
-          this.todoItemsCollection.snapshotChanges().map(changes => {
-            return changes.map(a => {
-              const data = a.payload.doc.data() as ITodoItem;
-              const id = a.payload.doc.id;
-              return { id, ...data };
-            });
-          }).subscribe(items => this.todoItems = items);
+          this.db
+            .collection<ITodoItem>('todos', ref => ref.where('listId', '==', list.id))
+            .snapshotChanges().map(changes => {
+              return changes.map(a => {
+                const data = a.payload.doc.data() as ITodoItem;
+                const id = a.payload.doc.id;
+                return { id, ...data };
+              });
+            }).subscribe(items => this.todoItems = items);
         }
       });
   }

@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -15,6 +16,7 @@ describe('MainComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ MainComponent ],
       imports: [
+        FormsModule,
         RouterTestingModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule

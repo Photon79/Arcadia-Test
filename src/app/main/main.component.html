@@ -1,7 +1,29 @@
 <div class="container">
   <div class="col-sm-6">
-    <app-lists [(list)]="list"></app-lists>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <ul>
+          <li *ngFor="let list of lists | async">
+            <a [routerLink]="['/lists', list.id]">{{list.name}} ({{list.completed}} / {{list.count}})</a>
+          </li>
+        </ul>
+      </div>
+      <div class="panel-footer">
+        <form #f="ngForm" (ngSubmit)="addList()">
+          <div class="form-group">
+            <input
+              name="listName" class="form-control"
+              [(ngModel)]="listName" placeholder="New list..."
+              required />
+          </div>
+          <div class="form-group text-center">
+            <button class="btn btn-success" type="submit" [disabled]="!f.form.valid">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
+
   <div class="col-sm-6">
     <app-list-details [list]="list"></app-list-details>
   </div>

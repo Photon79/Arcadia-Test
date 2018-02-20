@@ -6,15 +6,14 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
-import { ListsComponent } from './lists/lists.component';
 import { ListDetailsComponent } from './list-details/list-details.component';
 import { MainComponent } from './main/main.component';
 import { routing } from './app.routes';
+import { PipesModule } from './shared/pipes/pipes.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ListsComponent,
     ListDetailsComponent,
     MainComponent
   ],
@@ -23,7 +22,8 @@ import { routing } from './app.routes';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),
     FormsModule,
-    routing
+    routing,
+    PipesModule
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

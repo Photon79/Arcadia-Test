@@ -16,13 +16,13 @@
       </div>
     </div>
 
-    <div class="panel-body">
+    <div class="panel-body" [class.empty]="!todoItems.length">
       <ul class="todo-list" *ngIf="todoItems.length">
-        <li *ngFor="let todo of todoItems" [class.completed]="todo.completed" [class.editing]="todo.editing">
+        <li *ngFor="let todo of todoItems | search:filter | status:status" [class.completed]="todo.completed" [class.editing]="todo.editing">
           <div class="view">
             <input class="toggle" type="checkbox" (click)="toggleCompletion(todo)" [checked]="todo.completed">
             <label (dblclick)="editTodo(todo)">{{todo.title}}</label>
-            <button class="destroy" (click)="removeTodo(todo)"></button>
+            <button *ngIf="!todo.completed" class="destroy" (click)="removeTodo(todo)"></button>
           </div>
 
           <input
