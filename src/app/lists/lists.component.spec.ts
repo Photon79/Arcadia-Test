@@ -1,5 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
+import { environment } from '../../environments/environment';
 import { ListsComponent } from './lists.component';
 
 describe('ListComponent', () => {
@@ -8,7 +13,13 @@ describe('ListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListsComponent ]
+      imports: [
+        FormsModule,
+        RouterTestingModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFirestoreModule
+      ],
+      declarations: [ ListsComponent ],
     })
     .compileComponents();
   }));
