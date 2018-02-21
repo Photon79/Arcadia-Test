@@ -40,9 +40,9 @@ export class ListDetailsComponent implements OnInit {
       .debounceTime(300)
       .subscribe(list => {
         if (list) {
-          this.db
-            .collection<ITodoItem>('todos', ref => ref.where('listId', '==', list.id))
-            .snapshotChanges().map(changes => {
+          this.todoItemsCollection = this.db.collection<ITodoItem>('todos', ref => ref.where('listId', '==', list.id));
+
+          this.todoItemsCollection.snapshotChanges().map(changes => {
               return changes.map(a => {
                 const data = a.payload.doc.data() as ITodoItem;
                 const id = a.payload.doc.id;
